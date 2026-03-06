@@ -303,7 +303,7 @@ print(f'{header}.{payload}.')
 "
 ```
 
-This outputs a token like `eyJhbGciOiAibm9uZSJ9.eyJzdWIiOiAiZGV2LXVzZXIiLCAicm9sZSI6ICJhZG1pbiIsICJzY29wZSI6ICJkZXZzZWNvcHMucmVhZCBkZXZzZWNvcHMuc2VjdXJpdHkifQ.` that you can use with any tool. Adjust the `role` and `scope` values to test different access levels (see [Authentication and Authorization](#authentication-and-authorization)).
+This outputs a token like `eyJhbGciOiAibm9uZSJ9.fake_payload_for_docs.` that you can use with any tool. Adjust the `role` and `scope` values to test different access levels (see [Authentication and Authorization](#authentication-and-authorization)).
 
 > **Warning:** These unsigned tokens are for development only. In production, use properly signed JWTs issued by your organization's identity provider.
 

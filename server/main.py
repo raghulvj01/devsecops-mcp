@@ -6,9 +6,16 @@ from audit.audit_logger import audit_tool_call
 from server.auth import authorize_tool, decode_bearer_token
 from server.config import load_role_policies, load_scope_policies, load_settings
 from tools.aws.ec2 import list_ec2_instances
+from tools.aws.s3 import check_s3_public_access
 from tools.cicd.pipeline import pipeline_status
 from tools.git.repo import get_recent_commits
 from tools.kubernetes.pods import list_pods
+from tools.network.headers import check_http_headers
+from tools.network.port_scanner import port_scan
+from tools.network.ssl_checker import check_ssl_certificate
+from tools.security.deps import check_dependencies
+from tools.security.secrets import scan_secrets
+from tools.security.semgrep import run_semgrep_scan
 from tools.security.trivy import run_trivy_scan
 
 settings = load_settings()
@@ -57,6 +64,65 @@ def cicd_pipeline_status(token: str, base_url: str, pipeline_id: str, api_token:
     """Fetch the status of a CI/CD pipeline."""
     _authorize(token, "cicd_pipeline_status")
     return pipeline_status(base_url, pipeline_id, api_token)
+
+
+# ── New zero-install tools ─────────────────────────────────────────
+
+
+@mcp.tool()
+@audit_tool_call("security_scan_secrets")
+def security_scan_secrets(token: str, path: str) -> list[dict]:
+    """Scan files or directories for exposed secrets (API keys, tokens, passwords)."""
+    _authorize(token, "security_scan_secrets")
+    return scan_secrets(path)
+
+
+@mcp.tool()
+@audit_tool_call("security_check_ssl_certificate")
+def security_check_ssl_certificate(token: str, hostname: str, port: int = 443) -> dict:
+    """Check SSL/TLS certificate details and expiry for a domain."""
+    _authorize(token, "security_check_ssl_certificate")
+    return check_ssl_certificate(hostname, port)
+
+
+@mcp.tool()
+@audit_tool_call("security_check_dependencies")
+def security_check_dependencies(token: str, file_path: str) -> list[dict]:
+    """Scan dependency files (requirements.txt, package.json) for known vulnerabilities via OSV.dev."""
+    _authorize(token, "security_check_dependencies")
+    return check_dependencies(file_path)
+
+
+@mcp.tool()
+@audit_tool_call("security_check_http_headers")
+def security_check_http_headers(token: str, url: str) -> dict:
+    """Audit HTTP security headers (HSTS, CSP, X-Frame-Options, etc.) for a URL."""
+    _authorize(token, "security_check_http_headers")
+    return check_http_headers(url)
+
+
+@mcp.tool()
+@audit_tool_call("aws_check_s3_public_access")
+def aws_check_s3_public_access(token: str, region: str = "us-east-1") -> list[dict]:
+    """Audit S3 buckets for public access settings."""
+    _authorize(token, "aws_check_s3_public_access")
+    return check_s3_public_access(region)
+
+
+@mcp.tool()
+@audit_tool_call("network_port_scan")
+def network_port_scan(token: str, host: str, ports: str = "") -> list[dict]:
+    """Perform a TCP port scan on common service ports for a host."""
+    _authorize(token, "network_port_scan")
+    return port_scan(host, ports)
+
+
+@mcp.tool()
+@audit_tool_call("security_semgrep_scan")
+def security_semgrep_scan(token: str, path: str, config: str = "auto") -> dict:
+    """Run a Semgrep SAST scan on source code. Config can be 'auto', 'p/python', 'p/javascript', 'p/owasp-top-ten', 'p/security-audit', etc."""
+    _authorize(token, "security_semgrep_scan")
+    return run_semgrep_scan(path, config)
 
 
 if __name__ == "__main__":

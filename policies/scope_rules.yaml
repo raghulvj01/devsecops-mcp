@@ -4,5 +4,13 @@ scopes:
     - k8s_list_pods
     - git_recent_commits
     - cicd_pipeline_status
+    - security_check_ssl_certificate
+    - security_check_http_headers
+    - network_port_scan
+    - aws_check_s3_public_access
+    - security_semgrep_scan
   devsecops.security:
     - security_run_trivy_scan
+    - security_scan_secrets
+    - security_check_dependencies
+    - security_semgrep_scan

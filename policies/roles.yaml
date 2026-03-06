@@ -3,12 +3,30 @@ roles:
     - aws_list_ec2_instances
     - k8s_list_pods
     - git_recent_commits
+    - security_check_ssl_certificate
+    - security_check_http_headers
+    - network_port_scan
+    - security_semgrep_scan
   security:
     - security_run_trivy_scan
     - git_recent_commits
+    - security_scan_secrets
+    - security_check_ssl_certificate
+    - security_check_dependencies
+    - security_check_http_headers
+    - security_semgrep_scan
+    - aws_check_s3_public_access
+    - network_port_scan
   admin:
     - aws_list_ec2_instances
     - k8s_list_pods
     - security_run_trivy_scan
     - git_recent_commits
     - cicd_pipeline_status
+    - security_scan_secrets
+    - security_check_ssl_certificate
+    - security_check_dependencies
+    - security_check_http_headers
+    - security_semgrep_scan
+    - aws_check_s3_public_access
+    - network_port_scan
