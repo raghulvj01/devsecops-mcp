@@ -26,7 +26,7 @@ def get_logger(name: str = "mcp.devsecops") -> logging.Logger:
     if logger.handlers:
         return logger
     logger.setLevel(logging.INFO)
-    handler = logging.StreamHandler(sys.stdout)
+    handler = logging.StreamHandler(sys.stderr)
     handler.setFormatter(JsonFormatter())
     logger.addHandler(handler)
     logger.propagate = False
