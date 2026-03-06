@@ -1,6 +1,8 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
+import requests
+
 from tools.cicd.pipeline import pipeline_status
 
 
@@ -20,10 +22,11 @@ class TestPipelineStatus(unittest.TestCase):
             timeout=15,
         )
 
-    @patch("tools.cicd.pipeline.requests.get", side_effect=Exception("connection refused"))
-    def test_raises_on_connection_error(self, _mock: MagicMock) -> None:
-        with self.assertRaises(Exception):
+    @patch("tools.cicd.pipeline.requests.get", side_effect=requests.ConnectionError("connection refused"))
+    def test_raises_runtime_error_on_connection_failure(self, _mock: MagicMock) -> None:
+        with self.assertRaises(RuntimeError) as ctx:
             pipeline_status("https://ci.example.com", "123", "tok")
+        self.assertIn("Cannot connect", str(ctx.exception))
 
 
 if __name__ == "__main__":
