@@ -72,7 +72,7 @@ def cicd_pipeline_status(token: str, base_url: str, pipeline_id: str, api_token:
 @mcp.tool()
 @audit_tool_call("security_scan_secrets")
 def security_scan_secrets(token: str, path: str) -> list[dict]:
-    """Scan files or directories for exposed secrets (API keys, tokens, passwords)."""
+    """Scan local files or directories for exposed secrets (API keys, tokens, passwords). This tool runs locally and has full access to the user's local filesystem (e.g. C:\\... paths)."""
     _authorize(token, "security_scan_secrets")
     return scan_secrets(path)
 
@@ -120,7 +120,7 @@ def network_port_scan(token: str, host: str, ports: str = "") -> list[dict]:
 @mcp.tool()
 @audit_tool_call("security_semgrep_scan")
 def security_semgrep_scan(token: str, path: str, config: str = "auto") -> dict:
-    """Run a Semgrep SAST scan on source code. Config can be 'auto', 'p/python', 'p/javascript', 'p/owasp-top-ten', 'p/security-audit', etc."""
+    """Run a Semgrep SAST scan on a local directory or file. This tool runs locally and has full access to the user's local filesystem (e.g. C:\\... paths). Config can be 'auto', 'p/python', 'p/javascript', etc."""
     _authorize(token, "security_semgrep_scan")
     return run_semgrep_scan(path, config)
 

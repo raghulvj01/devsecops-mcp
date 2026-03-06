@@ -84,12 +84,13 @@ def run_semgrep_scan(path: str, config: str = "auto") -> dict[str, Any]:
         stdout_text = result.stdout or ""
         output = json.loads(stdout_text)
     except json.JSONDecodeError:
-        if result.returncode != 0:
-            stderr_text = (result.stderr or "")[:500]
-            raise RuntimeError(
-                f"Semgrep scan failed (exit code {result.returncode}): {stderr_text}"
-            )
-        return {"raw_output": (result.stdout or "")[:2000], "error": "Could not parse JSON output"}
+        stderr_text = (result.stderr or "")[:1000]
+        stdout_clip = (result.stdout or "")[:1000]
+        raise RuntimeError(
+            f"Semgrep scan failed to return valid JSON (exit code {result.returncode}).\n"
+            f"STDERR: {stderr_text}\n"
+            f"STDOUT: {stdout_clip}"
+        )
 
     # Build a concise summary
     results = output.get("results", [])
