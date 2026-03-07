@@ -53,23 +53,37 @@ def run_semgrep_scan(path: str, config: str = "auto") -> dict[str, Any]:
         "scan",
         "--json",
         "--config", config,
+        "--jobs=1",  # Fix Windows RPC IPC bug in semgrep-core
+        "--quiet",   # Prevent interactive progress bars from deadlocking stdout pipe
+        "--no-rewrite-rule-ids",
+        "--no-git-ignore", # Scan all files regardless of git tracking status
         path,
     ]
+
+    import time
 
     # Set UTF-8 mode to avoid Windows charmap encoding errors
     env = os.environ.copy()
     env["PYTHONUTF8"] = "1"
     env["PYTHONIOENCODING"] = "utf-8"
 
+    # On Windows, passing the command as an array causes IPC pipe deadlocks 
+    # inside semgrep-core.exe. Passing it as a raw string bypasses the bug.
+    exec_cmd = cmd
+    if sys.platform == "win32":
+        exec_cmd = subprocess.list2cmdline(cmd)
+
     try:
         result = subprocess.run(
-            cmd,
+            exec_cmd,
             capture_output=True,
             text=True,
             encoding="utf-8",
             errors="replace",
             timeout=300,
             env=env,
+            stdin=subprocess.DEVNULL,
+            shell=sys.platform == "win32",
         )
     except FileNotFoundError as exc:
         raise RuntimeError(
@@ -86,8 +100,9 @@ def run_semgrep_scan(path: str, config: str = "auto") -> dict[str, Any]:
     except json.JSONDecodeError:
         stderr_text = (result.stderr or "")[:1000]
         stdout_clip = (result.stdout or "")[:1000]
+        
         raise RuntimeError(
-            f"Semgrep scan failed to return valid JSON (exit code {result.returncode}).\n"
+            f"Semgrep scan natively failed to return valid JSON (exit code {result.returncode}).\n"
             f"STDERR: {stderr_text}\n"
             f"STDOUT: {stdout_clip}"
         )
