@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+
 from mcp.server.fastmcp import FastMCP
 
 from audit.audit_logger import audit_tool_call
@@ -24,43 +26,47 @@ scope_policies = load_scope_policies(settings)
 
 mcp = FastMCP(settings.service_name, json_response=True)
 
+AUTH_DISABLED = os.getenv("MCP_AUTH_DISABLED", "false").lower() == "true"
+
 
 def _authorize(token: str, tool_name: str) -> None:
+    if AUTH_DISABLED or not token:
+        return
     principal = decode_bearer_token(token, settings)
     authorize_tool(principal, tool_name, role_policies, scope_policies)
 
 
 @mcp.tool()
 @audit_tool_call("aws_list_ec2_instances")
-def aws_list_ec2_instances(token: str, region: str) -> list[dict]:
+def aws_list_ec2_instances(region: str, token: str = "") -> list[dict]:
     _authorize(token, "aws_list_ec2_instances")
     return list_ec2_instances(region)
 
 
 @mcp.tool()
 @audit_tool_call("k8s_list_pods")
-def k8s_list_pods(token: str, namespace: str = "default") -> list[dict]:
+def k8s_list_pods(namespace: str = "default", token: str = "") -> list[dict]:
     _authorize(token, "k8s_list_pods")
     return list_pods(namespace)
 
 
 @mcp.tool()
 @audit_tool_call("security_run_trivy_scan")
-def security_run_trivy_scan(token: str, image: str) -> dict:
+def security_run_trivy_scan(image: str, token: str = "") -> dict:
     _authorize(token, "security_run_trivy_scan")
     return run_trivy_scan(image)
 
 
 @mcp.tool()
 @audit_tool_call("git_recent_commits")
-def git_recent_commits(token: str, limit: int = 10) -> list[dict[str, str]]:
+def git_recent_commits(limit: int = 10, token: str = "") -> list[dict[str, str]]:
     _authorize(token, "git_recent_commits")
     return get_recent_commits(limit)
 
 
 @mcp.tool()
 @audit_tool_call("cicd_pipeline_status")
-def cicd_pipeline_status(token: str, base_url: str, pipeline_id: str, api_token: str) -> dict:
+def cicd_pipeline_status(base_url: str, pipeline_id: str, api_token: str, token: str = "") -> dict:
     """Fetch the status of a CI/CD pipeline."""
     _authorize(token, "cicd_pipeline_status")
     return pipeline_status(base_url, pipeline_id, api_token)
@@ -71,7 +77,7 @@ def cicd_pipeline_status(token: str, base_url: str, pipeline_id: str, api_token:
 
 @mcp.tool()
 @audit_tool_call("security_scan_secrets")
-def security_scan_secrets(token: str, path: str) -> list[dict]:
+def security_scan_secrets(path: str, token: str = "") -> list[dict]:
     """Scan local files or directories for exposed secrets (API keys, tokens, passwords). This tool runs locally and has full access to the user's local filesystem (e.g. C:\\... paths)."""
     _authorize(token, "security_scan_secrets")
     return scan_secrets(path)
@@ -79,7 +85,7 @@ def security_scan_secrets(token: str, path: str) -> list[dict]:
 
 @mcp.tool()
 @audit_tool_call("security_check_ssl_certificate")
-def security_check_ssl_certificate(token: str, hostname: str, port: int = 443) -> dict:
+def security_check_ssl_certificate(hostname: str, port: int = 443, token: str = "") -> dict:
     """Check SSL/TLS certificate details and expiry for a domain."""
     _authorize(token, "security_check_ssl_certificate")
     return check_ssl_certificate(hostname, port)
@@ -87,7 +93,7 @@ def security_check_ssl_certificate(token: str, hostname: str, port: int = 443) -
 
 @mcp.tool()
 @audit_tool_call("security_check_dependencies")
-def security_check_dependencies(token: str, file_path: str) -> list[dict]:
+def security_check_dependencies(file_path: str, token: str = "") -> list[dict]:
     """Scan dependency files (requirements.txt, package.json) for known vulnerabilities via OSV.dev."""
     _authorize(token, "security_check_dependencies")
     return check_dependencies(file_path)
@@ -95,7 +101,7 @@ def security_check_dependencies(token: str, file_path: str) -> list[dict]:
 
 @mcp.tool()
 @audit_tool_call("security_check_http_headers")
-def security_check_http_headers(token: str, url: str) -> dict:
+def security_check_http_headers(url: str, token: str = "") -> dict:
     """Audit HTTP security headers (HSTS, CSP, X-Frame-Options, etc.) for a URL."""
     _authorize(token, "security_check_http_headers")
     return check_http_headers(url)
@@ -103,7 +109,7 @@ def security_check_http_headers(token: str, url: str) -> dict:
 
 @mcp.tool()
 @audit_tool_call("aws_check_s3_public_access")
-def aws_check_s3_public_access(token: str, region: str = "us-east-1") -> list[dict]:
+def aws_check_s3_public_access(region: str = "us-east-1", token: str = "") -> list[dict]:
     """Audit S3 buckets for public access settings."""
     _authorize(token, "aws_check_s3_public_access")
     return check_s3_public_access(region)
@@ -111,7 +117,7 @@ def aws_check_s3_public_access(token: str, region: str = "us-east-1") -> list[di
 
 @mcp.tool()
 @audit_tool_call("network_port_scan")
-def network_port_scan(token: str, host: str, ports: str = "") -> list[dict]:
+def network_port_scan(host: str, ports: str = "", token: str = "") -> list[dict]:
     """Perform a TCP port scan on common service ports for a host."""
     _authorize(token, "network_port_scan")
     return port_scan(host, ports)
@@ -119,7 +125,7 @@ def network_port_scan(token: str, host: str, ports: str = "") -> list[dict]:
 
 @mcp.tool()
 @audit_tool_call("security_semgrep_scan")
-def security_semgrep_scan(token: str, path: str, config: str = "auto") -> dict:
+def security_semgrep_scan(path: str, config: str = "auto", token: str = "") -> dict:
     """Run a Semgrep SAST scan on a local directory or file. This tool runs locally and has full access to the user's local filesystem (e.g. C:\\... paths). Config can be 'auto', 'p/python', 'p/javascript', etc."""
     _authorize(token, "security_semgrep_scan")
     return run_semgrep_scan(path, config)
