@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="docs/aegis-mcp-logo-v2.svg" width="520" alt="Aegis MCP logo"/>
   <h1>🛡️ Aegis MCP Server</h1>
   <p><b>Aegis MCP is an open-source, DevSecOps-focused Model Context Protocol server that allows AI agents to safely interact with cloud infrastructure, CI/CD systems, and security tooling.</b></p>
 

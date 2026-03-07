@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 160" width="500" height="160">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050D1A"/>
+      <stop offset="100%" style="stop-color:#071525"/>
+    </linearGradient>
+
+    <linearGradient id="cyanBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00E5FF"/>
+      <stop offset="100%" style="stop-color:#0091EA"/>
+    </linearGradient>
+
+    <linearGradient id="shieldFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A2A4A"/>
+      <stop offset="100%" style="stop-color:#051525"/>
+    </linearGradient>
+
+    <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00E5FF" stop-opacity="0.15"/>
+      <stop offset="100%" style="stop-color:#0091EA" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <filter id="neon" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur1"/>
+      <feGaussianBlur stdDeviation="6" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="softNeon" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <clipPath id="roundedClip">
+      <rect width="500" height="160" rx="16"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="500" height="160" rx="16" fill="url(#bg)"/>
+
+  <!-- Scanline texture -->
+  <g clip-path="url(#roundedClip)" opacity="0.03">
+    <line x1="0" y1="4" x2="500" y2="4" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="8" x2="500" y2="8" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="12" x2="500" y2="12" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="16" x2="500" y2="16" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="20" x2="500" y2="20" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="24" x2="500" y2="24" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="28" x2="500" y2="28" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="32" x2="500" y2="32" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="36" x2="500" y2="36" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="40" x2="500" y2="40" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="44" x2="500" y2="44" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="48" x2="500" y2="48" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="52" x2="500" y2="52" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="56" x2="500" y2="56" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="60" x2="500" y2="60" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="64" x2="500" y2="64" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="68" x2="500" y2="68" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="72" x2="500" y2="72" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="76" x2="500" y2="76" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="80" x2="500" y2="80" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="84" x2="500" y2="84" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="88" x2="500" y2="88" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="92" x2="500" y2="92" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="96" x2="500" y2="96" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="100" x2="500" y2="100" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="104" x2="500" y2="104" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="108" x2="500" y2="108" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="112" x2="500" y2="112" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="116" x2="500" y2="116" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="120" x2="500" y2="120" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="124" x2="500" y2="124" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="128" x2="500" y2="128" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="132" x2="500" y2="132" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="136" x2="500" y2="136" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="140" x2="500" y2="140" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="144" x2="500" y2="144" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="148" x2="500" y2="148" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="152" x2="500" y2="152" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="156" x2="500" y2="156" stroke="#00E5FF" stroke-width="1"/>
+    <line x1="0" y1="160" x2="500" y2="160" stroke="#00E5FF" stroke-width="1"/>
+  </g>
+
+  <!-- Hexagon background glow blob -->
+  <ellipse cx="80" cy="80" rx="65" ry="65" fill="#00E5FF" opacity="0.04"/>
+
+  <!-- Outer hex ring -->
+  <polygon points="80,18 125,43 125,93 80,118 35,93 35,43"
+           fill="url(#hexGrad)" stroke="#00E5FF" stroke-width="1" opacity="0.5"/>
+
+  <!-- Mid hex ring -->
+  <polygon points="80,30 113,49 113,87 80,106 47,87 47,49"
+           fill="none" stroke="#00B0FF" stroke-width="0.7" opacity="0.35"/>
+
+  <!-- Inner hex (shield fill) -->
+  <polygon points="80,42 106,57 106,87 80,102 54,87 54,57"
+           fill="url(#shieldFill)" stroke="#00E5FF" stroke-width="1.5" filter="url(#softNeon)" opacity="0.9"/>
+
+  <!-- Shield A letter inside hex -->
+  <text x="80" y="90" font-family="'Arial Black', sans-serif" font-size="46" font-weight="900"
+        text-anchor="middle" fill="none" stroke="url(#cyanBlue)" stroke-width="1.5"
+        filter="url(#neon)" opacity="0.95">A</text>
+
+  <!-- Rotating orbit ring around hex -->
+  <ellipse cx="80" cy="68" rx="52" ry="52" fill="none" stroke="#00E5FF"
+           stroke-width="0.5" stroke-dasharray="4 8" opacity="0.3"/>
+
+  <!-- 3 orbit nodes -->
+  <circle cx="80" cy="16" r="3" fill="#00E5FF" filter="url(#softNeon)" opacity="0.8"/>
+  <circle cx="128" cy="93" r="3" fill="#00E5FF" filter="url(#softNeon)" opacity="0.8"/>
+  <circle cx="32" cy="93" r="3" fill="#00E5FF" filter="url(#softNeon)" opacity="0.8"/>
+
+  <!-- Divider line vertical -->
+  <line x1="155" y1="25" x2="155" y2="135" stroke="#00E5FF" stroke-width="0.8" opacity="0.2"/>
+
+  <!-- AEGIS main text -->
+  <text x="175" y="82" font-family="'Arial Black', 'Impact', sans-serif" font-size="52"
+        font-weight="900" fill="white" letter-spacing="8" opacity="0.97">AEGIS</text>
+
+  <!-- Glowing underline -->
+  <rect x="175" y="90" width="268" height="2" rx="1" fill="url(#cyanBlue)" filter="url(#softNeon)" opacity="0.8"/>
+
+  <!-- MCP badge -->
+  <rect x="175" y="100" width="56" height="20" rx="3"
+        fill="none" stroke="#00E5FF" stroke-width="1" opacity="0.6"/>
+  <text x="203" y="114" font-family="'Courier New', monospace" font-size="11" font-weight="700"
+        text-anchor="middle" fill="#00E5FF" letter-spacing="2">MCP</text>
+
+  <!-- SERVER text next to badge -->
+  <text x="240" y="114" font-family="'Courier New', monospace" font-size="11"
+        fill="#546E7A" letter-spacing="3">SERVER</text>
+
+  <!-- Tagline -->
+  <text x="175" y="135" font-family="'Courier New', monospace" font-size="9"
+        fill="#37474F" letter-spacing="2">DevSecOps · Cloud Infrastructure · AI Agents</text>
+
+  <!-- Top right corner bracket decoration -->
+  <path d="M475 20 L490 20 L490 35" fill="none" stroke="#00E5FF" stroke-width="1.5" opacity="0.4"/>
+  <path d="M475 140 L490 140 L490 125" fill="none" stroke="#00E5FF" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Border glow -->
+  <rect width="500" height="160" rx="16" fill="none" stroke="#00E5FF" stroke-width="1" opacity="0.15"/>
+</svg>
