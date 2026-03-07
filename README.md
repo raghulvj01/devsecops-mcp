@@ -311,31 +311,9 @@ The `@audit_tool_call` decorator emits structured JSON logs for every invocation
 
 ---
 
-## 📦 Publish to npm
-
-```bash
-# 1) Login to npm
-npm login
-
-# 2) Verify package contents
-npm run pack:check
-
-# 3) Publish publicly
-npm publish --access public
-```
-
-For scoped packages like `@raghulm/aegis-mcp`, keep `--access public` in the publish command.
-
----
-
 ## 🤝 Contributing
 
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Add your tool into `tools/<domain>/`
-4. Register it via `@mcp.tool()` in `server/main.py` with `@audit_tool_call` and auth check
-5. Add tests in `tests/`
-6. Open a Pull Request
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution and maintainer release workflows.
 
 ---
 
